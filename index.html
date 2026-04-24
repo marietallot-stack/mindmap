@@ -1,59 +1,103 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Carte Mentale - Positionnement Stratégique</title>
-  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <meta charset="UTF-8" />
+  <title>Carte mentale dynamique</title>
 
   <style>
     body {
+      margin: 0;
       font-family: Montserrat, Arial, sans-serif;
-      background-color: #f4f7f6;
+      background: #f4f7f6;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
       padding: 20px;
-      text-align: center;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    header img {
+      height: 50px;
     }
 
     h1 {
       color: #103EB8;
+      margin: 0;
+      font-size: 22px;
+    }
+
+    svg {
+      width: 100vw;
+      height: 85vh;
+      background: #ffffff;
     }
   </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/markmap-view"></script>
+  <script src="https://cdn.jsdelivr.net/npm/markmap-lib"></script>
 </head>
 
 <body>
-  <h1>Ma Trajectoire Professionnelle</h1>
 
-  <div class="mermaid">
-mindmap
-  root((Positionnement))
-    STAR((Méthode STAR))
-      Impact
-      Lisibilité
-      Valeur Marché
-      Preuve de valeur
-    Positionnement((Modèle V1))
-      Cible
-      Problématique
-      Forces
-      Approche
-    Scénarios((Scénarios Pro))
-      Salariat
-      Indépendant
-    Actions((Crash Test))
-      LinkedIn
-      Réseau
-      Feedback
-  </div>
+<header>
+  <!-- 👉 remplace "logo.png" par le nom de ton fichier -->
+  <img src="logo.png" alt="Logo">
+  <h1>Positionnement Stratégique</h1>
+</header>
 
-  <script>
-    mermaid.initialize({
-      startOnLoad: true,
-      theme: 'base',
-      themeVariables: {
-        primaryColor: '#103EB8',
-        edgeLabelBackground: '#C3E7EC',
-        tertiaryColor: '#F9902A'
-      }
-    });
-  </script>
+<svg id="mindmap"></svg>
+
+<script>
+  const markdown = `
+# Positionnement
+
+## Méthode STAR
+### Impact
+### Lisibilité
+### Valeur Marché
+### Preuve de valeur
+
+## Modèle V1
+### Cible
+### Problématique
+### Forces
+### Approche
+
+## Scénarios Pro
+### Salariat
+### Indépendant
+
+## Crash Test
+### LinkedIn
+### Réseau
+### Feedback
+`;
+
+  const { Transformer } = window.markmap;
+  const { Markmap } = window.markmap;
+
+  const transformer = new Transformer();
+  const { root } = transformer.transform(markdown);
+
+  Markmap.create("#mindmap", {
+    color: (node) => {
+      const colors = [
+        "#103EB8", // bleu principal
+        "#F9902A", // orange
+        "#DE5858", // corail
+        "#C3E7EC"  // bleu clair
+      ];
+      return colors[node.depth % colors.length];
+    },
+    initialExpandLevel: 1
+  }, root);
+</script>
+
 </body>
 </html>
