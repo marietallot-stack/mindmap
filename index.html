@@ -1,16 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Test</title>
+  <title>Carte Mentale - Positionnement Stratégique</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+
+  <style>
+    body {
+      font-family: Montserrat, Arial, sans-serif;
+      background-color: #f4f7f6;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #103EB8;
+    }
+  </style>
 </head>
+
 <body>
+  <h1>Ma Trajectoire Professionnelle</h1>
 
-<h1>Test OK</h1>
+  <div class="mermaid">
+mindmap
+  root((Positionnement))
+    STAR((Méthode STAR))
+      Impact
+      Lisibilité
+      Valeur Marché
+      Preuve de valeur
+    Positionnement((Modèle V1))
+      Cible
+      Problématique
+      Forces
+      Approche
+    Scénarios((Scénarios Pro))
+      Salariat
+      Indépendant
+    Actions((Crash Test))
+      LinkedIn
+      Réseau
+      Feedback
+  </div>
 
-<script>
-  document.body.style.background = "lightgreen";
-</script>
-
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#103EB8',
+        edgeLabelBackground: '#C3E7EC',
+        tertiaryColor: '#F9902A'
+      }
+    });
+  </script>
 </body>
 </html>
