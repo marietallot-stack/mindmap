@@ -1,102 +1,215 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Carte mentale dynamique</title>
+<meta charset="UTF-8">
+<title>Carte mentale dynamique</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Montserrat, Arial, sans-serif;
-      background: #f4f7f6;
+<style>
+  :root {
+    --bleu: #103EB8;
+    --orange: #F9902A;
+    --bleu-clair: #C3E7EC;
+    --rose: #FCD3C6;
+    --corail: #DE5858;
+    --fond: #F7FAFC;
+    --texte: #1F2937;
+  }
+
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: var(--fond);
+    color: var(--texte);
+  }
+
+  header {
+    background: white;
+    padding: 22px 30px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  }
+
+  header img {
+    height: 54px;
+  }
+
+  h1 {
+    color: var(--bleu);
+    margin: 0;
+    font-size: 26px;
+  }
+
+  .subtitle {
+    margin: 4px 0 0;
+    color: #555;
+  }
+
+  .container {
+    padding: 40px;
+  }
+
+  .center {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .root {
+    display: inline-block;
+    background: var(--bleu);
+    color: white;
+    padding: 22px 34px;
+    border-radius: 22px;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0 8px 20px rgba(16,62,184,0.25);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 26px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 22px;
+    padding: 22px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    border-top: 8px solid var(--bleu);
+  }
+
+  .card:nth-child(2) { border-top-color: var(--orange); }
+  .card:nth-child(3) { border-top-color: var(--corail); }
+  .card:nth-child(4) { border-top-color: var(--bleu-clair); }
+
+  .card h2 {
+    margin-top: 0;
+    color: var(--bleu);
+    font-size: 20px;
+  }
+
+  .items {
+    display: none;
+    margin-top: 16px;
+  }
+
+  .item {
+    background: var(--fond);
+    margin: 10px 0;
+    padding: 12px 14px;
+    border-radius: 14px;
+    font-weight: 500;
+  }
+
+  button {
+    margin-top: 12px;
+    background: var(--orange);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  button:hover {
+    background: var(--corail);
+  }
+
+  a {
+    color: var(--bleu);
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr;
     }
-
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
-      padding: 20px;
-      background: white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-
-    header img {
-      height: 50px;
-    }
-
-    h1 {
-      color: #103EB8;
-      margin: 0;
-      font-size: 22px;
-    }
-
-    svg {
-      width: 100vw;
-      height: 85vh;
-      background: #ffffff;
-    }
-  </style>
-
-  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-  <script src="https://cdn.jsdelivr.net/npm/markmap-view"></script>
-  <script src="https://cdn.jsdelivr.net/npm/markmap-lib"></script>
+  }
+</style>
 </head>
 
 <body>
 
 <header>
-  <!-- 👉 remplace "logo.png" par le nom de ton fichier -->
   <img src="logo.png" alt="Logo">
-  <h1>Positionnement Stratégique</h1>
+  <div>
+    <h1>Carte mentale dynamique</h1>
+    <p class="subtitle">Séance 2 — Positionnement stratégique</p>
+  </div>
 </header>
 
-<svg id="mindmap"></svg>
+<div class="container">
+
+  <div class="center">
+    <div class="root">Positionnement</div>
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <h2>Méthode STAR</h2>
+      <p>Transformer une expérience en preuve de valeur.</p>
+      <button onclick="toggle('star')">Voir / masquer</button>
+      <div class="items" id="star">
+        <div class="item">Impact</div>
+        <div class="item">Lisibilité</div>
+        <div class="item">Valeur marché</div>
+        <div class="item">Preuve de valeur</div>
+        <div class="item"><a href="https://www.linkedin.com" target="_blank">Lien exemple LinkedIn</a></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Modèle V1</h2>
+      <p>Clarifier une première version du positionnement.</p>
+      <button onclick="toggle('modele')">Voir / masquer</button>
+      <div class="items" id="modele">
+        <div class="item">Cible</div>
+        <div class="item">Problématique</div>
+        <div class="item">Forces</div>
+        <div class="item">Approche</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Scénarios Pro</h2>
+      <p>Explorer les options professionnelles réalistes.</p>
+      <button onclick="toggle('scenarios')">Voir / masquer</button>
+      <div class="items" id="scenarios">
+        <div class="item">Salariat</div>
+        <div class="item">Indépendant</div>
+        <div class="item">Transition</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Crash Test</h2>
+      <p>Tester le positionnement auprès du marché.</p>
+      <button onclick="toggle('actions')">Voir / masquer</button>
+      <div class="items" id="actions">
+        <div class="item">LinkedIn</div>
+        <div class="item">Réseau</div>
+        <div class="item">Feedback</div>
+        <div class="item"><a href="mailto:contact@example.com">Envoyer un message test</a></div>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 <script>
-  const markdown = `
-# Positionnement
-
-## Méthode STAR
-### Impact
-### Lisibilité
-### Valeur Marché
-### Preuve de valeur
-
-## Modèle V1
-### Cible
-### Problématique
-### Forces
-### Approche
-
-## Scénarios Pro
-### Salariat
-### Indépendant
-
-## Crash Test
-### LinkedIn
-### Réseau
-### Feedback
-`;
-
-  const { Transformer } = window.markmap;
-  const { Markmap } = window.markmap;
-
-  const transformer = new Transformer();
-  const { root } = transformer.transform(markdown);
-
-  Markmap.create("#mindmap", {
-    color: (node) => {
-      const colors = [
-        "#103EB8", // bleu principal
-        "#F9902A", // orange
-        "#DE5858", // corail
-        "#C3E7EC"  // bleu clair
-      ];
-      return colors[node.depth % colors.length];
-    },
-    initialExpandLevel: 1
-  }, root);
+  function toggle(id) {
+    const element = document.getElementById(id);
+    element.style.display = element.style.display === "block" ? "none" : "block";
+  }
 </script>
 
 </body>
